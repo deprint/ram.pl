@@ -1,0 +1,4 @@
+^MANIFEST\.SKIP
+^\.build-tools\.cson
+^\.gitignore
+^\.git

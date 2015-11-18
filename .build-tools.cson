@@ -1,0 +1,120 @@
+providers: [
+  {
+    key: "bt"
+    config:
+      commands: [
+        {
+          project: "/home/fabian/Projects/Language-RAM"
+          source: "/home/fabian/Projects/Language-RAM/.build-tools.cson"
+          name: "Build"
+          command: "make"
+          wd: "."
+          env: {}
+          modifier: {}
+          stdout:
+            pty: false
+            highlighting: "nh"
+            ansi_option: "ignore"
+          stderr:
+            highlighting: "nh"
+            ansi_option: "ignore"
+          output:
+            console:
+              close_success: true
+              queue_in_buffer: true
+              stdin: false
+          version: 1
+        }
+        {
+          project: "/home/fabian/Projects/Language-RAM"
+          source: "/home/fabian/Projects/Language-RAM/.build-tools.cson"
+          name: "Test"
+          command: "make test"
+          wd: "."
+          env: {}
+          modifier:
+            env:
+              RELEASE_TESTING: "y"
+          stdout:
+            pty: false
+            highlighting: "nh"
+            ansi_option: "ignore"
+          stderr:
+            highlighting: "nh"
+            ansi_option: "ignore"
+          output:
+            console:
+              close_success: true
+              queue_in_buffer: true
+              stdin: false
+          version: 1
+        }
+        {
+          project: "/home/fabian/Projects/Language-RAM"
+          source: "/home/fabian/Projects/Language-RAM/.build-tools.cson"
+          name: "Makefile.PL"
+          command: "perl Makefile.PL"
+          wd: "."
+          env: {}
+          modifier: {}
+          stdout:
+            pty: false
+            highlighting: "nh"
+            ansi_option: "ignore"
+          stderr:
+            highlighting: "nh"
+            ansi_option: "ignore"
+          output:
+            console:
+              close_success: true
+              queue_in_buffer: true
+              stdin: false
+          version: 1
+        }
+        {
+          project: "/home/fabian/Projects/Language-RAM"
+          source: "/home/fabian/Projects/Language-RAM/.build-tools.cson"
+          name: "Show doc"
+          command: "perldoc %f"
+          wd: "."
+          env: {}
+          modifier:
+            wildcards: {}
+          stdout:
+            highlighting: "nh"
+            ansi_option: "parse"
+          stderr:
+            highlighting: "nh"
+            ansi_option: "ignore"
+          output:
+            console:
+              close_success: false
+              queue_in_buffer: false
+              stdin: false
+          version: 1
+        }
+        {
+          project: "/home/fabian/Projects/Language-RAM"
+          source: "/home/fabian/Projects/Language-RAM/.build-tools.cson"
+          name: "Check doc"
+          command: "podchecker %f"
+          wd: "."
+          env: {}
+          modifier:
+            wildcards: {}
+          stdout:
+            highlighting: "nh"
+            ansi_option: "ignore"
+          stderr:
+            highlighting: "nh"
+            ansi_option: "ignore"
+          output:
+            console:
+              close_success: true
+              queue_in_buffer: true
+              stdin: false
+          version: 1
+        }
+      ]
+  }
+]
