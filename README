@@ -1,6 +1,6 @@
 Language-RAM
 
-This package provides a library and an interpreter to emulate a basic
+This package provides a library (Language::RAM) and an interpreter (ram.pl) to emulate a basic
 "Random Access Machine". This computer model uses an assembler-like syntax
 and can be used to test simple algorithms for their complexity.
 
@@ -32,7 +32,7 @@ reg <-- reg
 CONDITIONALS
 
 jump imm: Jump to line imm
-if reg (<|<=|=|!=|=>|>) imm then jump imm: Jump to line imm if condition is true
+if reg (<|<=|=|!=|=>|>) 0 then jump imm: Jump to line imm if condition is true
 
 ARITHMETIC
 

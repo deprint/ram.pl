@@ -29,20 +29,20 @@ See C<ram.pl --help> for details.
 
     use Language::RAM;
 
-    my $in = "INPUT 0\nOUTPUT 1\na <-- s[0]\na <-- a * s[0]\ns[1] <-- a\nHALT";
+    my $input = "INPUT 0\nOUTPUT 1\na <-- s[0]\na <-- a * s[0]\ns[1] <-- a\nHALT";
 
-    my @machine = Language::RAM::asl($in);
-    die "Error in asl: $machine[2]" if ($machine[2] ne '');
+    my %machine = Language::RAM::asl($input);
+    die "$machine{'error'}" if ($machine{'error'} ne '');
 
-    my $ret = Language::RAM::run(\@machine, [qw(4)], 100);
-    unless($ret eq '') {
-      print STDERR "Error from machine: $machine[2]";
+    my $ret = Language::RAM::run(\%machine, [8]); # Returns 8^2
+    if($ret) {
+      print STDERR "Error from machine: $machine{'error'}\n";
     }
 
-    my %output = Language::RAM::get_output(\@machine);
+    my %output = Language::RAM::get_output(\%machine);
     print "OUTPUT FROM MACHINE:\n";
-    for (my $key = keys %output) {
-      printf "%4d=%d\n", $key, $output{$key};
+    foreach (sort { $a <=> $b } keys %output) {
+      printf "%4d=%d\n", $_, $output{$_} // 0;
     }
 
 =head1 EXPORT
