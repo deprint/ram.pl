@@ -14,7 +14,7 @@ Version 0.01
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.011';
 
 
 =head1 SYNOPSIS
@@ -180,16 +180,9 @@ sub run {
     }
     ++$machine->{'stats'}{'command_usage'}{$machine->{'ip'}};
 
-    unless(&eval($current, $machine, 0, $_[3])) {
-      if($_[3] && !exists $machine->{'snaps'}{$machine->{'steps'}}) {
-        $machine->{'snaps'}{$machine->{'steps'}} = [($machine->{'ip'})];
-      }
-      return $machine->{'error'};
-    }
+    $machine->{'snaps'}{$machine->{'steps'}} = [($machine->{'ip'})] if $_[3];
 
-    if($_[3] && !exists $machine->{'snaps'}{$machine->{'steps'}}) {
-      $machine->{'snaps'}{$machine->{'steps'}} = [($machine->{'ip'})];
-    }
+    &eval($current, $machine, 0, $_[3]) or return $machine->{'error'};
 
     ++$machine->{'ip'};
     ++$machine->{'steps'};
@@ -1104,7 +1097,7 @@ Add replayable snapshot where memory slot addr changes to value.
 =cut
 
 sub add_snapshot {
-  $_[0]->{'snaps'}{$_[0]->{'steps'}} = [($_[0]->{'ip'}, $_[1], $_[2])];
+  push @{$_[0]->{'snaps'}{$_[0]->{'steps'}}}, ($_[1], $_[2]);
 }
 
 =head2 report(machine, message)

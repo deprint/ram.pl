@@ -9,7 +9,9 @@ use Language::RAM;
 plan tests => 3;
 
 my $machine = {
-  snaps => {},
+  snaps => {
+    0 => [(3)]
+  },
   steps => 0,
   ip => 3
 };
