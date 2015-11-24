@@ -10,11 +10,11 @@ Language::RAM - A "Random Access Machine" Emulator
 
 =head1 VERSION
 
-Version 0.01
+Version 0.012
 
 =cut
 
-our $VERSION = '0.011';
+our $VERSION = '0.012';
 
 
 =head1 SYNOPSIS
@@ -164,7 +164,8 @@ sub run {
   $machine->{'memory'} = {};
   $machine->{'snaps'} = {} if $_[3];
 
-  while (my ($index, $id) = each @{$machine->{'input_layout'}}) {
+  foreach my $index ( 0 .. $#{$$machine{'input_layout'}}) {
+    my $id = $$machine{'input_layout'}->[$index];
     $machine->{'memory'}{$id} = $machine->{'input'}[$index] // 0;
   }
 
@@ -295,7 +296,8 @@ sub get_first_memory_snapshot {
     $snapshot{$$snapshots{$_}->[1]} = 0;
   }
 
-  while (my ($index, $id) = each @{$$machine{'input_layout'}}) {
+  foreach my $index ( 0 .. $#{$$machine{'input_layout'}}) {
+    my $id = $$machine{'input_layout'}->[$index];
     $snapshot{$id} = $$machine{'input'}->[$index] // 0;
   }
 
