@@ -166,7 +166,9 @@ sub run {
 
   foreach my $index ( 0 .. $#{$$machine{'input_layout'}}) {
     my $id = $$machine{'input_layout'}->[$index];
-    $machine->{'memory'}{$id} = $machine->{'input'}[$index] // 0;
+    my $input = $machine->{'input'}[$index];
+    (defined $input) or $input = 0;
+    $machine->{'memory'}{$id} = $input;
   }
 
   while($limit == -1 || $machine->{'steps'} < $limit) {
@@ -298,7 +300,9 @@ sub get_first_memory_snapshot {
 
   foreach my $index ( 0 .. $#{$$machine{'input_layout'}}) {
     my $id = $$machine{'input_layout'}->[$index];
-    $snapshot{$id} = $$machine{'input'}->[$index] // 0;
+    my $input = $$machine{'input'}->[$index];
+    (defined $input) or $input = 0;
+    $snapshot{$id} = $input;
   }
 
   return %snapshot;
@@ -872,14 +876,16 @@ Returns address of memory block if B<type> is 2.
 =cut
 
 sub eval_mem {
+  my $type = $_[2];
+  (defined $type) or $type = 0;
   unless(exists $_[1]->{'memory'}{$_[0]->[1]}) {
     $_[1]->{'memory'}{$_[0]->[1]} = 0;
   }
 
-  &inc_mem_stat($_[1], $_[0]->[1], $_[2]);
+  &inc_mem_stat($_[1], $_[0]->[1], $type);
 
-  return $_[1]->{'memory'}{$_[0]->[1]} unless ($_[2] // 0) > 0;
-  return \$_[1]->{'memory'}{$_[0]->[1]} if $_[2] == 1;
+  return $_[1]->{'memory'}{$_[0]->[1]} unless $type > 0;
+  return \$_[1]->{'memory'}{$_[0]->[1]} if $type == 1;
   return $_[0]->[1];
 }
 
@@ -1073,7 +1079,7 @@ Add read action to memory slot if B<action> is false.
 =cut
 
 sub inc_mem_stat {
-  return if ($_[2] // 0) == 2; #Bail if used in stat collection.
+  return if $_[2] == 2; #Bail if used in stat collection.
 
   unless(exists $_[0]->{'stats'}{'memory_usage'}{$_[1]}) {
     $_[0]->{'stats'}{'memory_usage'}{$_[1]} = [qw(0 0)];

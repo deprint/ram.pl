@@ -59,7 +59,7 @@ if($ret) {
 my %output = Language::RAM::get_output(\%machine);
 print "OUTPUT FROM MACHINE:\n";
 foreach (sort { $a <=> $b } keys %output) {
-  printf "%4d=%d\n", $_, $output{$_} // 0;
+  printf "%4d=%d\n", $_, (defined $output{$_}) ? $output{$_} : 0;
 }
 
 my %codes = Language::RAM::get_code_stats(\%machine);
